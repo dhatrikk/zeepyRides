@@ -8,8 +8,8 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleLogin}>
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Password" required />
+      <input type="email" id='email' placeholder="Email" required />
+      <input type="password" id='pwd' placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
   );
