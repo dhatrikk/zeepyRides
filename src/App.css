@@ -2,37 +2,53 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
+/* Header-like styling for consistent layout */
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(to bottom, #ff0066, #ffffff); /* Dark pink gradient */
   min-height: 100vh;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: #333;
+  box-sizing: border-box;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.App-link {
-  color: #61dafb;
+/* Shared button styles */
+.button {
+  background-color: #f2f2f2;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  color: #333;
+  border-radius: 8px;
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 3D shadow */
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Hover effect for buttons */
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+  background-color: #e0e0e0;
+}
+
+/* Container for routing components */
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Add padding for child text and buttons */
+.page-container h1,
+.page-container p {
+  margin: 10px 0;
 }
