@@ -1,18 +1,18 @@
 import React,{Suspense} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LoginPage from './Login-Register/Login/LoginPage';
-import RegisterPage from './Login-Register/Register/RegisterPage';
-import HomePage from './Login-Register/HomePage/HomePage';
+import Home from './Pages/homePage';
+import Login from "./Pages/loginPage";
+import Register from "./Pages/registerPage";
 import './App.css';
 
-function App() {
-  return (
+    function App() {
+      return (
     <Router>
        <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />}/>
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<Home/>} />
+          <Route path="/login" element={<Login />}/>
+          <Route path="/register" element={<Register/>} />
         </Routes>
        </Suspense>
     </Router>
