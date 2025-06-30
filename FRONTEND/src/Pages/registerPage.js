@@ -4,17 +4,48 @@ import { useNavigate } from "react-router-dom";
 const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    dob: "",
+    sex: "",
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = (e) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Add registration logic here
+    setError("");
+    setSuccess("");
+
+    try {
+      const response = await fetch("http://localhost:3001/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log("Sending payload:", formData);
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Registration failed");
+      } else {
+        setSuccess("Registration successful! Redirecting to login...");
+        setTimeout(() => navigate("/login"), 2000);
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -27,27 +58,60 @@ const RegisterPage = () => {
           Register
         </h2>
 
+        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+        {success && <p className="text-green-600 text-sm mb-3">{success}</p>}
+
         <div className="mb-4">
           <label className="block text-gray-600 mb-1">Name</label>
           <input
             type="text"
+            name="name"
             required
             placeholder="Enter your name"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={formData.name}
+            onChange={handleChange}
           />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-600 mb-1">Date of Birth</label>
+          <input
+            type="date"
+            name="dob"
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+            value={formData.dob}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-600 mb-1">Sex</label>
+          <select
+            name="sex"
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+            value={formData.sex}
+            onChange={handleChange}
+          >
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
         <div className="mb-4">
           <label className="block text-gray-600 mb-1">Email</label>
           <input
             type="email"
+            name="email"
             required
             placeholder="Enter your email"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
 
@@ -56,11 +120,12 @@ const RegisterPage = () => {
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
+              name="password"
               required
               placeholder="Create a password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 pr-16"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
             />
             <button
               type="button"
@@ -79,7 +144,6 @@ const RegisterPage = () => {
           Register
         </button>
 
-        {/* Existing user link */}
         <p className="mt-4 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <span
