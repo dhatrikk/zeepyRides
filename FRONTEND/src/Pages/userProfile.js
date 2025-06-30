@@ -16,7 +16,7 @@ const UserProfile = () => {
       }
 
       try {
-        const res = await fetch("http://localhost:3001/user/profile", {
+        const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/user/profile`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
